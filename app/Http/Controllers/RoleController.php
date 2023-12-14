@@ -20,7 +20,7 @@ class RoleController extends Controller
         // if (!FacadesGate::allows('read role')) {
         //     abort(403, 'unauthorized');
         // }
-        return view('roles.index');
+        return view('konfigurasi.role');
     }
 
     /**

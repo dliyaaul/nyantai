@@ -31,4 +31,34 @@ class RoleTest extends TestCase
 
         // $response->assertStatus(200);
     }
+
+    public function testCannotShowRoleNotLogin()
+    {
+        $this->get('roles')->assertRedirect('login')->assertStatus(302);
+    }
+
+    public function testCanCreateRole()
+    {
+        $user = User::role('admin')->get()->random();
+        $this->actingAs($user);
+        $this->get('/roles/create')->assertOk();
+        // $response = $this->get('/');
+
+        // $response->assertStatus(200);
+    }
+
+    public function testCannotCreateRole()
+    {
+        $user = User::role('subadmin1')->get()->random();
+        $this->actingAs($user);
+        $this->get('/roles/create')->assertStatus(403);
+        // $response = $this->get('/');
+
+        // $response->assertStatus(200);
+    }
+
+    public function testCannotCreateNotLogin()
+    {
+        $this->get('roles/create')->assertRedirect('login')->assertStatus(302);
+    }
 }
