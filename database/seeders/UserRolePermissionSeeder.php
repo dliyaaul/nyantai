@@ -44,13 +44,23 @@ class UserRolePermissionSeeder extends Seeder
             $role_subadmin1 = Role::create(['name' => 'subadmin1']);
             $role_subadmin2 = Role::create(['name' => 'subadmin2']);
 
-            $permission = Permission::create(['name' => 'read role']);
-            $permission = Permission::create(['name' => 'update role']);
-            $permission = Permission::create(['name' => 'create role']);
-            $permission = Permission::create(['name' => 'delete role']);
+            $permission = Permission::create(['name' => 'read konfigurasi/roles']);
+            $permission = Permission::create(['name' => 'update konfigurasi/roles']);
+            $permission = Permission::create(['name' => 'create konfigurasi/roles']);
+            $permission = Permission::create(['name' => 'delete konfigurasi/roles']);
+            $permission = Permission::create(['name' => 'read konfigurasi/permissions']);
+            $permission = Permission::create(['name' => 'read transaksi/tes']);
             Permission::create(['name' => 'read konfigurasi']);
 
-            $admin->givePermissionTo(['read role', 'update role', 'create role', 'delete role', 'read konfigurasi']);
+            $admin->givePermissionTo([
+                'read konfigurasi/roles',
+                'update konfigurasi/roles',
+                'create konfigurasi/roles',
+                'delete konfigurasi/roles',
+                'read konfigurasi',
+                'read konfigurasi/permissions',
+                'read transaksi/tes'
+            ]);
 
             $admin->assignRole('admin');
             $subadmin1->assignRole('subadmin1');
