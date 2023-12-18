@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\Role;
+use App\Models\Portfolio;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Illuminate\Support\Facades\Gate;
 use Yajra\DataTables\EloquentDataTable;
@@ -13,7 +13,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class RoleDataTable extends DataTable
+class PortfolioDataTable extends DataTable
 {
     /**
      * Build the DataTable class.
@@ -38,7 +38,10 @@ class RoleDataTable extends DataTable
                     $action .= ' <button type="button" data-id=' . $row->id . ' data-jenis="delete" class="btn btn-danger btn-sm action"><i class="ti-trash"></i></button>';
                 }
                 return $action;
-            })->rawColumns(['action'])
+            })->addColumn('image', function ($data) {
+                return '<img src=' . $data->image . ' width="40" height="40">';
+            })
+            ->rawColumns(['action', 'image'])
             ->addIndexColumn()
             ->setRowId('id');
     }
@@ -46,7 +49,7 @@ class RoleDataTable extends DataTable
     /**
      * Get the query source of dataTable.
      */
-    public function query(Role $model): QueryBuilder
+    public function query(Portfolio $model): QueryBuilder
     {
         return $model->newQuery();
     }
@@ -58,12 +61,12 @@ class RoleDataTable extends DataTable
     {
         return $this->builder()
             ->parameters(['searchDelay' => 1000])
-            ->setTableId('role-table')
+            ->setTableId('portfolio-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
-            ->responsive(true)
             //->dom('Bfrtip')
-            ->orderBy(1);
+            ->orderBy(1)
+            ->responsive(true);
     }
 
     /**
@@ -72,9 +75,10 @@ class RoleDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            // Column::make('id'),
             Column::make('DT_RowIndex')->title('No')->searchable(false)->orderable(false),
-            Column::make('name'),
+            Column::make('title'),
+            Column::make('date'),
+            Column::make('image')->searchable(false)->orderable(false),
             Column::make('created_at'),
             Column::make('updated_at'),
             Column::computed('action')
@@ -89,6 +93,6 @@ class RoleDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Role_' . date('YmdHis');
+        return 'Portfolio_' . date('YmdHis');
     }
 }

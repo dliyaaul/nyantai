@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
@@ -33,6 +34,9 @@ Route::middleware('auth')->group(function () {
     //roles
     Route::resource('konfigurasi/roles', RoleController::class);
     Route::resource('konfigurasi/permissions', PermissionController::class);
+
+    //pages
+    Route::resource('pages/portfolio', PortfolioController::class);
 });
 
 require __DIR__ . '/auth.php';
